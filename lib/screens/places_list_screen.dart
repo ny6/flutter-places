@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../providers/providers.dart';
+import '../utils/constants.dart';
 
 class PlacesListScreen extends StatelessWidget {
+  static const routeName = kPlacesListScreenRouteName;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +12,9 @@ class PlacesListScreen extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(kAddPlaceScreenRouteName);
+            },
           )
         ],
       ),

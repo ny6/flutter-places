@@ -17,6 +17,11 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.amber,
         ),
         home: PlacesListScreen(),
+        routes: {
+          AddPlaceScreen.routeName: (_) => AddPlaceScreen(),
+          PlaceDetailScreen.routeName: (_) => PlaceDetailScreen(),
+          PlacesListScreen.routeName: (_) => PlacesListScreen(),
+        },
       ),
     );
   }
