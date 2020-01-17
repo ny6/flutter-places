@@ -28,6 +28,10 @@
 	<string>App needs permission to record audio on this device!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App needs permission to open Photos!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App needs permission to access your location!</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>App needs permission to access your location!</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
