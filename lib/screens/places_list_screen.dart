@@ -37,7 +37,10 @@ class PlacesListScreen extends StatelessWidget {
                           ),
                           title: Text(places.items[i].title),
                           subtitle: Text(places.items[i].location.address),
-                          onTap: () {},
+                          onTap: () => Navigator.of(context).pushNamed(
+                            kPlaceDetailScreenRouteName,
+                            arguments: places.items[i].id,
+                          ),
                         ),
                         itemCount: places.items.length,
                       ),

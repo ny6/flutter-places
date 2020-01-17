@@ -11,6 +11,8 @@ class Places with ChangeNotifier {
 
   List<Place> get items => [..._items];
 
+  Place findById(id) => _items.firstWhere((item) => item.id == id);
+
   Future<void> addPlace(
       String title, File image, PlaceLocation location) async {
     final id = DateTime.now().toString();
