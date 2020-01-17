@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../utils/constants.dart' show kAddPlaceScreenRouteName;
 import '../widgets/widgets.dart';
+import '../providers/providers.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = kAddPlaceScreenRouteName;
@@ -11,11 +14,27 @@ class AddPlaceScreen extends StatefulWidget {
 
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
+  File _pickedImage;
 
   @override
   void dispose() {
     super.dispose();
     _titleController.dispose();
+  }
+
+  void _selectImage(File pickedImage) {
+    // not using setState because we don't want to re render component
+    // as we already handle the preview part in image input widget
+    _pickedImage = pickedImage;
+  }
+
+  void _savePlace() {
+    if (_titleController.text.isEmpty || _pickedImage == null) return;
+
+    Provider.of<Places>(context, listen: false)
+        .addPlace(_titleController.text, _pickedImage);
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -36,7 +55,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                       controller: _titleController,
                     ),
                     SizedBox(height: 10),
-                    ImageInput(),
+                    ImageInput(_selectImage),
                   ],
                 ),
               ),
@@ -48,7 +67,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             elevation: 0,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             color: Theme.of(context).accentColor,
-            onPressed: () {},
+            onPressed: _savePlace,
           ),
         ],
       ),
