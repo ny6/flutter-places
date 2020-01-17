@@ -9,7 +9,7 @@ class DBHelper {
     return sql.openDatabase(
       path.join(dbPath, kDBName),
       onCreate: (db, version) => db.execute(
-        'CREATE TABLE $kPlacesTableName(id TEXT PRIMARY KEY, title TEXT, image TEXT)',
+        'CREATE TABLE $kPlacesTableName(id TEXT PRIMARY KEY, title TEXT, image TEXT, loc_lat REAL, loc_lng REAL, address TEXT)',
       ),
       version: 1,
     );

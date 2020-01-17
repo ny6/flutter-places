@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../utils/constants.dart' show kAddPlaceScreenRouteName;
 import '../widgets/widgets.dart';
 import '../providers/providers.dart';
+import '../models/models.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = kAddPlaceScreenRouteName;
@@ -15,6 +16,7 @@ class AddPlaceScreen extends StatefulWidget {
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
   File _pickedImage;
+  PlaceLocation _pickedLocation;
 
   @override
   void dispose() {
@@ -29,12 +31,21 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   }
 
   void _savePlace() {
-    if (_titleController.text.isEmpty || _pickedImage == null) return;
+    if (_titleController.text.isEmpty ||
+        _pickedImage == null ||
+        _pickedLocation == null) return;
 
-    Provider.of<Places>(context, listen: false)
-        .addPlace(_titleController.text, _pickedImage);
+    Provider.of<Places>(context, listen: false).addPlace(
+      _titleController.text,
+      _pickedImage,
+      _pickedLocation,
+    );
 
     Navigator.of(context).pop();
+  }
+
+  void _selectPlace(double lat, double lng) {
+    _pickedLocation = PlaceLocation(latitude: lat, longitude: lng);
   }
 
   @override
@@ -57,7 +68,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     SizedBox(height: 10),
                     ImageInput(_selectImage),
                     SizedBox(height: 10),
-                    LocationInput(),
+                    LocationInput(_selectPlace),
                   ],
                 ),
               ),

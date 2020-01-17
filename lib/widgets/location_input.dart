@@ -5,6 +5,9 @@ import '../helpers/location_helper.dart';
 import '../screens/screens.dart';
 
 class LocationInput extends StatefulWidget {
+  LocationInput(this.onSelectPlace);
+
+  final Function onSelectPlace;
   @override
   _LocationInputState createState() => _LocationInputState();
 }
@@ -12,17 +15,22 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
 
+  void _setAndSaveLocation(double lat, double lng) {
+    setState(() {
+      _previewImageUrl = LocationHelper.generateLocationPreviewImage(
+        latitude: lat,
+        longitude: lng,
+      );
+    });
+    widget.onSelectPlace(lat, lng);
+  }
+
   Future<void> _getCurrentUserLocation() async {
     final locData = await Location().getLocation();
 
-    if (locData != null) {
-      setState(() {
-        _previewImageUrl = LocationHelper.generateLocationPreviewImage(
-          latitude: locData.latitude,
-          longitude: locData.longitude,
-        );
-      });
-    }
+    if (locData == null) return;
+
+    _setAndSaveLocation(locData.latitude, locData.longitude);
   }
 
   Future<void> _selectOnMap() async {
@@ -35,7 +43,7 @@ class _LocationInputState extends State<LocationInput> {
 
     if (selectedLocation == null) return;
 
-    print(selectedLocation);
+    _setAndSaveLocation(selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override
